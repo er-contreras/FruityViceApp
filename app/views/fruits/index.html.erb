@@ -1,0 +1,10 @@
+<h1>Fruit CSV Exporter</h1>
+
+<%= form_tag(fruits_export_csv_path, method: :get, "data-turbo": false) do %>
+  Name: <%= text_field_tag :name %><br>
+  Family: <%= text_field_tag :family %><br>
+  Genus: <%= text_field_tag :genus %><br>
+  Fruit ID: <%= text_field_tag :fruit_id %><br>
+  Filename: <%= text_field_tag :filename %><br>
+  <%= submit_tag 'Export to CSV' %>
+<% end %>
