@@ -25,7 +25,7 @@ class FruitsController < ApplicationController
   def fetch_fruits_by_criteria(criteria)
     chosen_criteria = criteria.select { |_, value| value.present? }
     if chosen_criteria.empty?
-      FruitApiService.fetch_all_fruits
+      FruitApiService.fetch_all_fruits # returns body of response with all fruits
     else
       if chosen_criteria.key?(:family) and chosen_criteria.key?(:genus)
         FruitApiService.fetch_fruits_w_family_n_genus(chosen_criteria[:family], chosen_criteria[:genus])
