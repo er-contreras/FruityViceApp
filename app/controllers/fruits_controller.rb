@@ -1,13 +1,4 @@
 class FruitsController < ApplicationController
-  BASE_URL = 'https://www.fruityvice.com/api/fruit'
-  CRITERIA_MAPPING = {
-    id: :get_fruit,
-    name: :get_fruit,
-    family: :get_fruit,
-    genus: :get_fruit,
-    order: :get_fruit
-  }.freeze
-
   def index; end
 
   def export_csv
@@ -31,19 +22,19 @@ class FruitsController < ApplicationController
 
   private
 
-  # Fetch fruits based on the specified criteria.
-  # If no criteria are selected, retrieve all fruits.
   def fetch_fruits_by_criteria(criteria)
     chosen_criteria = criteria.select { |_, value| value.present? }
     if chosen_criteria.empty?
-      FruitApiService.get('all')
+      FruitApiService.fetch_all_fruits
     else
-      method_name = CRITERIA_MAPPING[chosen_criteria.keys.first]
-      [FruitApiService.send(method_name, chosen_criteria.keys.first, chosen_criteria.values.first)].flatten
+      if chosen_criteria.key?(:family) and chosen_criteria.key?(:genus)
+        FruitApiService.fetch_fruits_w_family_n_genus(chosen_criteria[:family], chosen_criteria[:genus])
+      else
+        [FruitApiService.fetch_fruits_with_criteria(chosen_criteria)].flatten
+      end
     end
   end
 
-  # Generate a CSV representation of the provided data with headers.
   def generate_csv(data, headers)
     CSV.generate(headers: true) do |csv|
       csv << headers

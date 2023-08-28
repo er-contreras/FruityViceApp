@@ -1,28 +1,38 @@
 class FruitApiService
   BASE_URL = 'https://www.fruityvice.com/api/fruit'
 
-  # Perform a generic HTTP GET request to the Fruit API.
-  # Returns a parsed JSON response.
-  def self.get(resource)
-    response = HTTParty.get("#{BASE_URL}/#{resource}")
-    JSON.parse(response.body)
+  def self.fetch_all_fruits
+    perform_get('all')
   end
 
-  # Retrieve a fruit from the Fruit API based on a specific attribute and its value.
-  #
-  # @param attribute [Symbol] The attribute by which to fetch the fruit (e.g., :id, :name, etc.).
-  # @param value [String] The value of the specified attribute to filter the search.
-  # @return [Hash] A hash representing the fruit's information.
-  def self.get_fruit(attribute, value)
-    # Determine the appropriate API resource based on the attribute and value.
-    resource = case attribute
-               when :id, :name
-                 value.to_s
-               else
-                 "#{attribute}/#{value}"
-               end
+  def self.fetch_fruits_with_criteria(criteria)
+    attribute, value = criteria.first
+    perform_get(api_resource(attribute, value))
+  end
 
-    # Perform an API request to retrieve the fruit.
-    get(resource)
+  def self.fetch_fruits_w_family_n_genus(family, genus)
+    family_fruits = perform_get(api_resource(:family, family))
+    matching_fruits = family_fruits.select { |fruit| fruit['genus'] == genus }
+    matching_fruits
+  end
+
+  private
+
+  def self.api_resource(attribute, value)
+    case attribute
+    when :id, :name
+      value.to_s
+    else
+      "#{attribute}/#{value}"
+    end
+  end
+
+  def self.perform_get(resource)
+    response = HTTParty.get("#{BASE_URL}/#{resource}")
+    JSON.parse(response.body)
+  rescue HTTParty::Error, JSON::ParserError, StandardError => e
+    # Handle errors appropriately, e.g., log and handle gracefully.
+    Rails.logger.error("FruitApiService error: #{e.message}")
+    []
   end
 end
