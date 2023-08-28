@@ -1,24 +1,19 @@
-# README
+# FruityViceApp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a mini application that export csv files to the browser.
 
-Things you may want to cover:
+## Getting Started
 
-* Ruby version
+### Prerequisites
 
-* System dependencies
+Clone the repository and run the following command to install the dependencies:
 
-* Configuration
+```git clone git@github.com:er-contreras/FruityViceApp.git```
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- Run ```bundle install```
+- Run ```rails db:create```
+- Run ```rails server```
+- Open the browser and go to http://localhost:3000/
+- Click on the button to download the csv file
+- Open the file with your favorite spreadsheet editor
+- Enjoy!
