@@ -5,6 +5,12 @@
   Family: <%= text_field_tag :family %>
   Genus: <%= text_field_tag :genus %>
   Order: <%= text_field_tag :order %>
+  Nutritions:
+  <div>
+    Type: <%= text_field_tag :type %><br>
+    Min: <%= text_field_tag :min %><br>
+    Max: <%= text_field_tag :max %>
+  </div>
   Fruit ID: <%= text_field_tag :fruit_id %>
   Filename: <%= text_field_tag :filename %>
   <%= submit_tag 'Export to CSV' %>

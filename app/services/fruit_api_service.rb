@@ -16,6 +16,10 @@ class FruitApiService
     matching_fruits
   end
 
+  def self.fetch_fruits_by_protein_range(type, min, max)
+    perform_get("#{type}?min=#{min}&max=#{max}")
+  end
+
   private
 
   def self.api_resource(attribute, value)
