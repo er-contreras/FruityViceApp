@@ -30,6 +30,17 @@ form {
   font-size: 2rem;
 }
 
+form div {
+  display: flex;
+  color: #666666;
+  align-items: center;
+}
+
+form div input {
+  margin: 1rem auto;
+  width: 50%;
+}
+
 input {
   padding: 0.7rem;
   font-size: 2rem;
