@@ -32,8 +32,8 @@ class FruitsController < ApplicationController
     else
       if chosen_criteria.key?(:family) and chosen_criteria.key?(:genus)
         FruitApiService.fetch_fruits_w_family_n_genus(chosen_criteria[:family], chosen_criteria[:genus])
-      elsif chosen_criteria.key?(:min) and chosen_criteria.key?(:max)
-        FruitApiService.fetch_fruits_by_protein_range(chosen_criteria[:type],chosen_criteria[:min], chosen_criteria[:max])
+      elsif chosen_criteria.key?(:type) and chosen_criteria.key?(:min) and chosen_criteria.key?(:max)
+        [FruitApiService.fetch_fruits_by_protein_range(chosen_criteria[:type],chosen_criteria[:min], chosen_criteria[:max])].flatten
       else
         [FruitApiService.fetch_fruits_with_criteria(chosen_criteria)].flatten
       end
